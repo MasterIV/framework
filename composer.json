@@ -1,0 +1,26 @@
+{
+	"name": "masteriv/framework",
+	"type": "library",
+	"description": "Collection of perhaps useful Classes",
+	"homepage": "http://master-iv.info",
+	"license": "MIT",
+
+	"authors": [
+		{
+			"name": "Tobias Rojahn",
+			"email": "master_iv@web.de",
+			"homepage": "http://master-iv.info",
+			"role": "Developer"
+		}
+	],
+
+	"require": {
+		"php": ">=5.3.0"
+	},
+
+	"autoload": {
+		"psr-4": {
+			"Iv\\Framework\\": "src/"
+		}
+	}
+}
