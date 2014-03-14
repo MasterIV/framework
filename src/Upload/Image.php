@@ -48,7 +48,7 @@ class Image extends File {
 		$new = imagecreatetruecolor( $width, $height );
 		imagealphablending( $new , false );
 		imagecopyresampled( $new, $this->img,
-			0, 0, 0, 0, $width, $height, $this->height, $this->width );
+			0, 0, 0, 0, $width, $height, $this->width, $this->height );
 		imagedestroy( $this->img );
 
 		$this->img = $new;
