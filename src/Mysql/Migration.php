@@ -24,7 +24,8 @@ class Migration {
 
 	private function apply( $file, $type ) {
 		require $this->dir.$file;
-		if( $type == 'remove' ) remove(); else install();
+		if( $type == 'remove' ) remove($this->db);
+		else install($this->db);
 		$this->checkTable();
 		$this->db->migration->insert(array( 'id' => $file ));
 	}
