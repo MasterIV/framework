@@ -29,4 +29,17 @@ class Files {
 	public static function asset($file) {
 		return file_get_contents( self::ROOT . 'assets' . DIRECTORY_SEPARATOR . $file );
 	}
+
+	public static function templates($main) {
+		$files = [];
+		foreach (func_get_args() as $f)
+			$files[$f] = self::asset("tpl/$f.twig");
+
+		$loader = new \Twig_Loader_Array($files);
+
+		$twig = new \Twig_Environment($loader, []);
+		$twig->addFilter(new \Twig_SimpleFilter('ucfirst', 'ucfirst'));
+
+		return $twig->load($main);
+	}
 }

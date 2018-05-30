@@ -14,4 +14,8 @@ abstract class Container {
 			$this->services[$service] = $this->create($service);
 		return $this->services[$service];
 	}
+
+	public function set($name, $service) {
+		$this->services[$name] = $service;
+	}
 }

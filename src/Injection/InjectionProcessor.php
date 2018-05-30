@@ -113,15 +113,7 @@ class InjectionProcessor implements Processor  {
 	 * @param string $name
 	 */
 	public function dump($file, $name = 'IvServiceContainer') {
-		$loader = new \Twig_Loader_Array([
-				'container' => Files::asset('tpl/container.twig'),
-				'parameter' => Files::asset('tpl/parameter.twig')
-		]);
-
-		$twig = new \Twig_Environment($loader, []);
-		$twig->addFilter(new \Twig_SimpleFilter('ucfirst', 'ucfirst'));
-		$template = $twig->load('container');
-
+		$template = Files::templates('container', 'parameter');
 		file_put_contents($file, $template->render([
 			'name' => $name,
 			'definitions' => $this->definitions,
