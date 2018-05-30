@@ -13,15 +13,20 @@ class MysqlResult implements \Iterator, Result {
 
 	public function  __construct( \mysqli_result $res ) {
 		$this->res = $res;
-		$this->max = $this->num_rows();
+		$this->max = $this->num();
 	}
 
 	/**
 	 * Returns the number of rows found
 	 * @return int
 	 */
-	public function num_rows() {
+	public function num() {
 		return $this->res->num_rows;
+	}
+
+	/** Alias for num() */
+	public function num_rows(){
+		return $this->num();
 	}
 
 	/**
