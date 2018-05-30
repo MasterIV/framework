@@ -1,12 +1,12 @@
 <?php
 
-namespace Iv\Framework\Mysql;
+namespace Iv\Framework\Database;
 
 /**
  * This exception is thorwn when an SQL-Error occurs
  * Contains the query and the error message
  */
-class Exception extends \Exception {
+class DbException extends \Exception {
 	protected $query;
 	protected $error;
 

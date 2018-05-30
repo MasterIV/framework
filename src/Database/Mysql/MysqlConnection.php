@@ -1,8 +1,13 @@
 <?php
 
-namespace Iv\Framework\Mysql;
+namespace Iv\Framework\Database\Mysql;
 
-class Connection extends \mysqli {
+use Iv\Framework\Database\Connection;
+use Iv\Framework\Database\DbException;
+use Iv\Framework\Database\Result;
+use Iv\Framework\Database\Table;
+
+class MysqlConnection extends \mysqli implements Connection {
 	/**
 	 * Closes the connection on object destruction
 	 */
@@ -25,18 +30,18 @@ class Connection extends \mysqli {
 	 * @return Table
 	 */
 	public function t( $name ) {
-		return new Table( $this, $name );
+		return new MysqlTable( $this, $name );
 	}
 
 	/**
 	 * Directly executes SQL
 	 * @param string $query
-	 * @return Result
-	 * @throws Exception
+	 * @return boolean
+	 * @throws DbException
 	 */
 	public function exec( $query ) {
 		if( $result = parent::query( $query )) return $result;
-		else throw new Exception( $query, $this );
+		else throw new DbException( $query, $this );
 	}
 
 	/**
@@ -63,11 +68,8 @@ class Connection extends \mysqli {
 		if(func_num_args() > 1 )
 			$query = $this->formatSQL( func_get_args());
 
-		$res = $this->exec($query);
-
-		if( $res instanceof \mysqli_result )
-			return new Result( $res);
-		else return $res;
+		if( $result = parent::query( $query )) return new MysqlResult($result);
+		else throw new DbException( $query, $this );
 	}
 
 	/**

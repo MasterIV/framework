@@ -1,12 +1,15 @@
 <?php
 
-namespace Iv\Framework\Mysql;
+namespace Iv\Framework\Database\Mysql;
 
-class Table implements \IteratorAggregate {
+use Iv\Framework\Database\Result;
+use Iv\Framework\Database\Table;
+
+class MysqlTable implements \IteratorAggregate, Table {
 	private $db;
 	private $name = '';
 
-	public function  __construct( Connection $db, $name ) {
+	public function  __construct(MysqlConnection $db, $name ) {
 		$this->db = $db;
 		$this->name = $name;
 	}
@@ -23,7 +26,7 @@ class Table implements \IteratorAggregate {
 	 * Selects a record using a single column
 	 * @param string $name
 	 * @param array $arguments
-	 * @return \stdclass
+	 * @return \stdClass
 	 */
 	public function __call( $name, $arguments ) {
 		return $this->row( $arguments[0], $name )->object();

@@ -15,12 +15,15 @@
 	],
 
 	"require": {
-		"php": ">=5.3.0"
+		"php": ">=5.6.0",
+		"doctrine/annotations": "*",
+		"twig/twig": "2.x-dev"
 	},
 
 	"autoload": {
 		"psr-4": {
-			"Iv\\Framework\\": "src/"
+			"Iv\\Framework\\": "src/",
+			"example\\": "example/"
 		}
 	}
 }

@@ -1,8 +1,10 @@
 <?php
 
-namespace Iv\Framework\Mysql;
+namespace Iv\Framework\Database\Mysql;
 
-class Result implements \Iterator {
+use Iv\Framework\Database\Result;
+
+class MysqlResult implements \Iterator, Result {
 	/** @var \mysqli_result  */
 	protected $res;
 
@@ -40,7 +42,7 @@ class Result implements \Iterator {
 
 	/**
 	 * Fetches a record as object
-	 * @return \stdclass
+	 * @return \stdClass
 	 */
 	public function object() {
 		return $this->res->fetch_object();
