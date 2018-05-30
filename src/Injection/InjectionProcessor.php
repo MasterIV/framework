@@ -4,6 +4,7 @@ namespace Iv\Framework\Injection;
 
 use Iv\Framework\Configuration\Processor;
 use Iv\Framework\Files;
+use Iv\Framework\Injection\Annotation\Bean;
 use Iv\Framework\Injection\Annotation\Component;
 use Iv\Framework\Injection\Annotation\Inject;
 
@@ -18,6 +19,8 @@ class InjectionProcessor implements Processor  {
 	private $definitions = [];
 	/** @var Collection[] */
 	private $collections = [];
+	/** @var array */
+	private $beans = [];
 
 	/**
 	 * InjectionProcessor constructor.
@@ -88,9 +91,20 @@ class InjectionProcessor implements Processor  {
 	 * @param $annotation
 	 */
 	public function handleMethod($class, $method, $annotation) {
-		if(!$annotation instanceof Inject) return;
-		$this->definitions[$class->getName()]->methods[] = new Method(
-			$method->getName(), $this->readDependencies($annotation->dependencies));
+		if(!$annotation instanceof Inject)
+			return;
+
+		if($annotation instanceof Bean) {
+			$name = $annotation->name ?: $method->getName();
+			$this->beans[$name] = new Factory(
+					$name, $this->definitions[$class->getName()]->name,
+					new Method($method->getName(), $this->readDependencies($annotation->dependencies)));
+		} else {
+			$this->definitions[$class->getName()]->methods[] = new Method(
+					$method->getName(),
+					$this->readDependencies($annotation->dependencies));
+		}
+
 	}
 
 	/**
@@ -111,7 +125,8 @@ class InjectionProcessor implements Processor  {
 		file_put_contents($file, $template->render([
 			'name' => $name,
 			'definitions' => $this->definitions,
-			'collections' => $this->collections
+			'collections' => $this->collections,
+			'factories' => $this->beans,
 		]));
 	}
 }

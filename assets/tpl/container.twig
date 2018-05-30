@@ -14,7 +14,9 @@ class {{ name }} extends InjectionContainer  {
 {% for def in definitions %}
 			'{{ def.name }}' => 'create{{ def.name|ucfirst }}',
 {% endfor %}
-
+{% for fac in factories %}
+	'{{ fac.name }}' => 'create{{ fac.name|ucfirst }}',
+{% endfor %}
 {% for def in collections %}
 			'{{ def.name }}' => 'create{{ def.name|ucfirst }}',
 {% endfor %}
@@ -33,7 +35,12 @@ class {{ name }} extends InjectionContainer  {
 	}
 
 {% endfor %}
+{% for fac in factories %}
+	public function create{{ fac.name|ucfirst }}() {
+		return $this->get('{{ fac.factory }}')->{{ fac.method.name }}({{ include('parameter', {params: fac.method.arguments}, with_context = false) }});
+	}
 
+{% endfor %}
 {% for def in collections %}
 	public function create{{ def.name|ucfirst }}() {
 		return [
@@ -43,5 +50,6 @@ class {{ name }} extends InjectionContainer  {
 	{% endfor %}
 	];
 	}
+
 {% endfor %}
 }

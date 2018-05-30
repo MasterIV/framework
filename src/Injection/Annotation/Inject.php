@@ -8,5 +8,5 @@ namespace Iv\Framework\Injection\Annotation;
  */
 class Inject {
 	/** @var array */
-	public $dependencies;
+	public $dependencies = [];
 }
