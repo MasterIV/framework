@@ -21,6 +21,9 @@ class TemplateFactory {
 
 		$this->twig = new \Twig_Environment($this->loader, []);
 		$this->twig->addFilter(new \Twig_SimpleFilter('ucfirst', 'ucfirst'));
+		$this->twig->addFunction(new \Twig_SimpleFunction('path', function($location) {
+			return defined('HTTP_ROOT') && $location[0] == '/' ? HTTP_ROOT.$location : $location;
+		}));
 	}
 
 	public function addPath($path) {

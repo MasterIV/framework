@@ -14,7 +14,7 @@ class Redirect implements Response {
 	 * @param string $location
 	 */
 	public function __construct($location) {
-		$this->location = $location;
+		$this->location = defined('HTTP_ROOT') && $location[0] == '/' ? HTTP_ROOT.$location : $location;
 	}
 
 	public function send() {
