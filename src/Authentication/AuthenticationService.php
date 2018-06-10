@@ -77,24 +77,24 @@ class AuthenticationService {
 		if ($pass != $repeat)
 			$errors[] = 'Password and repetition do not match.';
 
+		if (count($errors))
+			throw new RegistrationException($errors);
+
 		// Check blacklists
 		if ($this->db->query("SELECT 1 FROM `user_blocked`
 			WHERE '%s' LIKE CONCAT('%%', `pattern`,'%%')
 			AND `type` = 'name'", $name)->num_rows())
-			$errors[] = 'This user name is not allowed on this page.';
+			throw new RegistrationException('This user name is not allowed on this page.');
 		if ($this->db->query("SELECT 1 FROM `user_blocked`
 			WHERE '%s' LIKE CONCAT('%%', `pattern`,'%%')
 			AND `type` = 'email'", $mail)->num_rows())
-			$errors[] = 'This E-Mail is not allowed on this page.';
+			throw new RegistrationException('This E-Mail is not allowed on this page.');
 
 		// Already in use ?
-		if ($this->db->id_get('user_data', $mail, 'email'))
-			$errors[] = 'Die angegebene E-Mail ist bereits vergeben';
-		if ($this->db->id_get('user_data', $name, 'name'))
-			$errors[] = 'Der angegebene Name ist bereits vergeben';
-
-		if (count($errors))
-			return $errors;
+		if ($this->db->user_data->row( $mail, 'email'))
+			throw new RegistrationException('The E-Mail is already in use.');
+		if ($this->db->user_data->row( $name, 'name'))
+			throw new RegistrationException('The name is already in use.');
 
 		$this->db->user_data->insert([
 				'name' => $name,

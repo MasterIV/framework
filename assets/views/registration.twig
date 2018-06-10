@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<title>{{ title }} - Registration</title>
+
+	<!-- Bootstrap core CSS -->
+	<link rel="stylesheet"
+	      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+	      integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+	      crossorigin="anonymous">
+
+	<style>
+		.modal {
+			position: relative;
+			z-index: 1;
+			display: block;
+		}
+	</style>
+</head>
+
+<body>
+
+<form action="/register" method="post">
+	<div class="modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h3>Create Account</h3>
+				</div>
+
+				<div class="modal-body">
+					{% if errors %}
+						<div class="alert alert-danger">
+							{% for error in errors %}<p><strong>{{ error }}</strong></p>{% endfor %}
+						</div>
+					{% endif %}
+
+					<div class="form-group">
+						<label for="regName">Name</label>
+						<input class="form-control" type="text" id="regName" placeholder="Name" name="name" value="{{ name }}">
+					</div>
+
+					<div class="form-group">
+						<label for="regPass">Password</label>
+						<input class="form-control" type="password" id="regPass" placeholder="Password" name="pass">
+					</div>
+
+					<div class="form-group">
+						<label for="regRep">Repeat Password</label>
+						<input class="form-control" type="password" id="regRep" placeholder="Password" name="repeat">
+					</div>
+
+					<div class="form-group">
+						<label for="regMail">E-Mail</label>
+						<input class="form-control" type="text" id="regMail" placeholder="E-Mail" name="email" value="{{ email }}">
+					</div>
+				</div>
+
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-primary">Register</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
+
+</body>
+</html>

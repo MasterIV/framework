@@ -21,7 +21,7 @@ class InitUsersMigration implements Migration {
 			`update_date` int(10) unsigned DEFAULT NULL,
 			`update_by` int(10) unsigned DEFAULT NULL,
 			PRIMARY KEY (`id`),
-			KEY `name` (`name`)
+			UNIQUE (`name`)
 		) ENGINE=InnoDB  DEFAULT CHARSET=utf8;");
 
 		$db->query("CREATE TABLE IF NOT EXISTS `user_blocked` (
