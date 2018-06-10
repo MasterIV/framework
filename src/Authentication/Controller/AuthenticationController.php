@@ -17,6 +17,18 @@ class AuthenticationController {
 	/** @var SessionAuthFilter */
 	private $filter;
 
+	/**
+	 * AuthenticationController constructor.
+	 * @param TemplateFactory $viewFactory
+	 * @param AuthenticationService $service
+	 * @param SessionAuthFilter $filter
+	 */
+	public function __construct(TemplateFactory $viewFactory, AuthenticationService $service, SessionAuthFilter $filter) {
+		$this->viewFactory = $viewFactory;
+		$this->service = $service;
+		$this->filter = $filter;
+	}
+
 	public function login($name, $pass, $relogin) {
 		if($this->filter->login($name, $pass, $relogin))
 			return new Redirect('/');
