@@ -5,6 +5,7 @@ namespace Iv\Framework\Session;
 
 
 use Iv\Framework\Injection\Annotation\Component;
+use Iv\Framework\Injection\Annotation\Inject;
 use Iv\Framework\Injection\Container;
 use Iv\Framework\Routing\Filter;
 use Iv\Framework\Routing\FilterChain;
@@ -17,6 +18,7 @@ class SessionFilter implements Filter {
 	/**
 	 * SessionFilter constructor.
 	 * @param Container $container
+	 * @Inject({"@Container"})
 	 */
 	public function __construct(Container $container) {
 		$this->container = $container;
