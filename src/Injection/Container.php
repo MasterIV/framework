@@ -5,9 +5,10 @@ namespace Iv\Framework\Injection;
 
 
 abstract class Container {
-	private $services = [];
+	protected $services = [];
 
 	public abstract function create($name);
+	public abstract function has($name);
 
 	public function get($service) {
 		if(empty($this->services[$service]))

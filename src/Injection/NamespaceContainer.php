@@ -20,4 +20,8 @@ class NamespaceContainer extends Container {
 		$class = $this->namespace . $name;
 		return new $class();
 	}
+
+	public function has($name) {
+		return class_exists($this->namespace . $name);
+	}
 }

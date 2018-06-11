@@ -36,4 +36,8 @@ class InjectionContainer extends Container  {
 		$fileName = 'cache/'.$file.'.php';
 		return is_file($fileName) ? include $fileName : null;
 	}
+
+	public function has($name) {
+		return isset($this->services[$name]) || isset($this->methods[$name]);
+	}
 }
