@@ -29,7 +29,7 @@ class Updater {
 	}
 
 	public function init() {
-		$this->system('init_migrations')->install($this->db);
+		$this->system('init_migrations')->apply(true);
 	}
 
 	/**
@@ -52,16 +52,14 @@ class Updater {
 			if (empty($applied[$id]) && preg_match('/\d{8}-\d{4}-(\w+)\.php/i', $id, $m)) {
 				require $id;
 				$class = Strings::camelize($m[1]) . 'Migration';
-				$pending[] = new $class();
+				$pending[] = new $class($id, $this->db);
 			}
 
 		return $pending;
 	}
 
 	public function install() {
-		foreach ($this->pending() as $migration) {
-			echo "Installing " . get_class($migration) . "...\n";
-			$migration->install($this->db);
-		}
+		foreach ($this->pending() as $migration)
+			$migration->apply();
 	}
 }

@@ -3,8 +3,8 @@
 use Iv\Framework\Database\Migration;
 use Iv\Framework\Database\Connection;
 
-class InitUsersMigration implements Migration {
-	public function install(Connection $db) {
+class InitUsersMigration extends Migration {
+	protected function install(Connection $db) {
 		$db->query("CREATE TABLE IF NOT EXISTS `user_data` (
 			`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 			`type` tinyint(4) NOT NULL,
@@ -65,7 +65,7 @@ class InitUsersMigration implements Migration {
 			ADD FOREIGN KEY (`group`) REFERENCES `user_groups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;");
 	}
 
-	public function remove(Connection $db) {
+	protected function remove(Connection $db) {
 		$db->query("DROP TABLE `user_group_rights`;");
 		$db->query("DROP TABLE `user_group_owner`;");
 		$db->query("DROP TABLE `user_groups`;");
