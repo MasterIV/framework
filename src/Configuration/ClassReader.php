@@ -6,6 +6,7 @@ namespace Iv\Framework\Configuration;
 
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\AnnotationRegistry;
+use Iv\Framework\Files;
 
 class ClassReader {
 	/** @var AnnotationReader */
@@ -60,6 +61,10 @@ class ClassReader {
 		return $classes;
 	}
 
+	public function readFramework() {
+		$this->read(Files::ROOT.DIRECTORY_SEPARATOR.'src'.DIRECTORY_SEPARATOR, 'Iv\\Framework\\');
+	}
+
 	/**
 	 * Read Dependency Injection Annotations
 	 * @param $dir string Sourcecode Directory
@@ -68,7 +73,6 @@ class ClassReader {
 	public function read($dir, $namespace) {
 		foreach ($this->findClasses($dir, $namespace) as $name) {
 			$class = new \ReflectionClass($name);
-
 			$classAnnotation = $this->reader->getClassAnnotations($class);
 			$this->process($class, $classAnnotation);
 		}

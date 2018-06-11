@@ -1,12 +1,15 @@
 <?php
 
 namespace Iv\Framework\Application\Controller;
+use Iv\Framework\Injection\Annotation\Component;
+use Iv\Framework\Injection\Annotation\Inject;
 use Iv\Framework\Output\TemplateFactory;
 use Iv\Framework\Routing\UserException;
 
 /**
  * Class ErrorController
  * @package Iv\Cms
+ * @Component()
  */
 class ErrorController {
 	/** @var TemplateFactory */
@@ -15,6 +18,7 @@ class ErrorController {
 	/**
 	 * ErrorController constructor.
 	 * @param $viewFactory
+	 * @Inject({"@TemplateFactory"})
 	 */
 	public function __construct(TemplateFactory $viewFactory) {
 		$this->viewFactory = $viewFactory;

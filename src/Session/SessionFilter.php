@@ -4,10 +4,12 @@
 namespace Iv\Framework\Session;
 
 
+use Iv\Framework\Injection\Annotation\Component;
 use Iv\Framework\Injection\Container;
 use Iv\Framework\Routing\Filter;
 use Iv\Framework\Routing\FilterChain;
 
+/** @Component() */
 class SessionFilter implements Filter {
 	/** @var Container */
 	private $container;

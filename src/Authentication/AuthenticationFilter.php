@@ -4,6 +4,7 @@
 namespace Iv\Framework\Authentication;
 
 
+use Iv\Framework\Injection\Annotation\Inject;
 use Iv\Framework\Injection\Container;
 
 abstract class AuthenticationFilter {
@@ -22,6 +23,7 @@ abstract class AuthenticationFilter {
 	 * @param Container $container
 	 * @param AuthenticationService $service
 	 * @param array $configuration
+	 * @Inject({"@Container", "@AuthenticationService", "~security"})
 	 */
 	public function __construct(Container $container, AuthenticationService $service, array $configuration) {
 		$this->container = $container;

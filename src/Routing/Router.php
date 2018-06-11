@@ -1,7 +1,10 @@
 <?php
 
 namespace Iv\Framework\Routing;
+use Iv\Framework\Injection\Annotation\Component;
+use Iv\Framework\Injection\Annotation\Inject;
 
+/** @Component() */
 class Router {
 	const CHILDREN = 'c';
 	const ROUTE = 'r';
@@ -12,6 +15,7 @@ class Router {
 	/**
 	 * Dispatcher constructor.
 	 * @param $routes
+	 * @Inject({"~routes"})
 	 */
 	public function __construct($routes = null) {
 		$this->routes = $routes ?: $this->init();

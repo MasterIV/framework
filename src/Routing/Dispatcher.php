@@ -3,8 +3,11 @@
 
 namespace Iv\Framework\Routing;
 
+use Iv\Framework\Injection\Annotation\Component;
+use Iv\Framework\Injection\Annotation\Inject;
 use Iv\Framework\Injection\Container;
 
+/** @Component() */
 class Dispatcher {
 	/** @var Container */
 	private $container;
@@ -15,10 +18,20 @@ class Dispatcher {
 	 * Dispatcher constructor.
 	 * @param Container $container
 	 * @param Filter[] $filters
+	 * @Inject({"@Container", "@Filters"})
 	 */
 	public function __construct(Container $container, $filters = []) {
 		$this->container = $container;
 		$this->filters = $filters;
+
+		// Sort filters to ensure correct order of execution
+		usort($this->filters, function(Filter $a, Filter $b) {
+			if($a->requires()[get_class($b)])
+				return 1;
+			if($b->requires()[get_class($a)])
+				return -1;
+			return count($a->requires()) - count($b->requires());
+		});
 	}
 
 	/**

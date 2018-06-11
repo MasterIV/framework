@@ -3,9 +3,10 @@
 
 namespace Iv\Framework\Output;
 
-
 use Iv\Framework\Files;
+use Iv\Framework\Injection\Annotation\Component;
 
+/** @Component() */
 class TemplateFactory {
 	private $loader;
 	private $twig;

@@ -5,7 +5,10 @@ namespace Iv\Framework\Authentication;
 
 
 use Iv\Framework\Database\Connection;
+use Iv\Framework\Injection\Annotation\Inject;
+use Iv\Framework\Injection\Annotation\Service;
 
+/** @Service()*/
 class AuthenticationService {
 	/** @var Connection */
 	private $db;
@@ -13,6 +16,7 @@ class AuthenticationService {
 	/**
 	 * AuthenticationService constructor.
 	 * @param Connection $db
+	 * @Inject({"@Db"})
 	 */
 	public function __construct(Connection $db) {
 		$this->db = $db;

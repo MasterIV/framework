@@ -41,9 +41,7 @@ class InjectionProcessor implements Processor  {
 		$this->definitions[$class->getName()] = $definition;
 
 		if(empty($annotation->collection)) return;
-		if(empty($this->collections[$annotation->collection]))
-			$this->collections[$annotation->collection] = new Collection($annotation->collection);
-		$this->collections[$annotation->collection]->add( $definition );
+		$this->addCollection($annotation->collection, $class->getName());
 	}
 
 	/**
@@ -79,7 +77,7 @@ class InjectionProcessor implements Processor  {
 	 */
 	public function handleConstructor($class, $annotation) {
 		if(!$annotation instanceof Inject) return;
-
+		if(empty($this->definitions[$class->getName()])) return;
 		$this->definitions[$class->getName()]->constructor
 			= $this->readDependencies($annotation->dependencies);
 	}
@@ -107,12 +105,26 @@ class InjectionProcessor implements Processor  {
 
 	}
 
+	private function check( &$services, $definitions ) {
+		foreach($definitions as $def)
+			if(isset($services[$def->name]))
+				throw new \Exception("Redundant service definition for: ".$def->name);
+			else
+				$services[$def->name] = true;
+	}
+
 	/**
 	 * Create the container.php inside the cache directory
 	 * @param $file
 	 * @param string $name
+	 * @throws \Exception
 	 */
 	public function dump($file, $name = 'IvServiceContainer') {
+		$services = [];
+		$this->check($services, $this->definitions);
+		$this->check($services, $this->collections);
+		$this->check($services, $this->beans);
+
 		$template = Files::templates('container', 'parameter');
 		file_put_contents($file, $template->render([
 			'name' => $name,
@@ -120,5 +132,15 @@ class InjectionProcessor implements Processor  {
 			'collections' => $this->collections,
 			'factories' => $this->beans,
 		]));
+	}
+
+	/**
+	 * @param $name
+	 * @param $class
+	 */
+	public function addCollection($name, $class) {
+		if (empty($this->collections[$name]))
+			$this->collections[$name] = new Collection($name);
+		$this->collections[$name]->add($this->definitions[$class]);
 	}
 }

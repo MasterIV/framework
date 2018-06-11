@@ -2,11 +2,13 @@
 
 namespace Iv\Framework\Authentication;
 
+use Iv\Framework\Injection\Annotation\Component;
 use Iv\Framework\Output\Redirect;
 use Iv\Framework\Routing\Filter;
 use Iv\Framework\Routing\FilterChain;
 use Iv\Framework\Session\Session;
 
+/** @Component() */
 class SessionAuthFilter extends AuthenticationFilter implements Filter  {
 	const COOKIE_LIFETIME = 604800;
 	const COOKIE_PREFIX = 'IV';
