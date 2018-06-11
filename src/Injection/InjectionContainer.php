@@ -5,7 +5,6 @@ namespace Iv\Framework\Injection;
 
 class InjectionContainer extends Container  {
 	private $methods = [];
-	private $services = [];
 	private $parameters = [];
 
 	/**
@@ -16,7 +15,7 @@ class InjectionContainer extends Container  {
 	public function __construct($methods, $parameters) {
 		$this->methods = $methods;
 		$this->parameters = $parameters;
-		$this->services['Container'] = $this;
+		$this->set('Container', $this);
 	}
 
 	public function create($service) {
