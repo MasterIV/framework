@@ -3,12 +3,12 @@
 use Iv\Framework\Database\Migration;
 use Iv\Framework\Database\Connection;
 
-class MigrationClassName implements Migration {
-	public function install(Connection $db) {
+class MigrationClassName extends Migration {
+	protected function install(Connection $db) {
 		$db->exec("");
 	}
 
-	public function remove(Connection $db) {
+	protected function remove(Connection $db) {
 		$db->exec("");
 	}
 }
