@@ -16,8 +16,8 @@ class AuthenticationProcessor implements Processor {
 	 * @param $annotation
 	 */
 	public function handleClass($class, $annotation) {
-		if($conf = $this->convertAnnotation($annotation)){
-			$name = $class->getName();
+		if($conf = $this->convertAnnotation($annotation)) {
+			$name = $class->getShortName();
 			$this->configuration[$name] = $conf;
 			$this->configuration[$name]['methods'] = [];
 		}
@@ -29,8 +29,8 @@ class AuthenticationProcessor implements Processor {
 	 * @param $annotation
 	 */
 	public function handleMethod($class, $method, $annotation) {
-		if($conf = $this->convertAnnotation($annotation)){
-			$name = $class->getName();
+		if($conf = $this->convertAnnotation($annotation)) {
+			$name = $class->getShortName();
 			if(empty( $this->configuration[$name]))
 				$this->configuration[$name] = ['methods' => []];
 
