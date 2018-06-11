@@ -31,6 +31,10 @@ class TemplateFactory {
 		$this->loader->prependPath($path);
 	}
 
+	public function addGlobal($name, $value) {
+		$this->twig->addGlobal($name, $value);
+	}
+
 	/**
 	 * @param $name
 	 * @return \Twig_TemplateWrapper
