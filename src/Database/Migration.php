@@ -22,7 +22,7 @@ abstract class Migration {
 		} else {
 			echo "Installing " . get_class($this) . "...\n";
 			$this->install($this->db);
-			$this->db->migrations->insert(['id' => $this->id]);
+			$this->db->migrations->insert(['id' => $this->id], 'REPLACE');
 			echo "\tInstallation complete.\n";
 		}
 	}
