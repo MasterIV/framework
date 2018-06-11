@@ -95,9 +95,9 @@ class AuthenticationService {
 			throw new RegistrationException('This E-Mail is not allowed on this page.');
 
 		// Already in use ?
-		if ($this->db->user_data->row( $mail, 'email'))
+		if ($this->db->user_data->row( $mail, 'email')->num_rows())
 			throw new RegistrationException('The E-Mail is already in use.');
-		if ($this->db->user_data->row( $name, 'name'))
+		if ($this->db->user_data->row( $name, 'name')->num_rows())
 			throw new RegistrationException('The name is already in use.');
 
 		$this->db->user_data->insert([

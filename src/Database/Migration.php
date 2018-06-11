@@ -3,7 +3,9 @@
 namespace Iv\Framework\Database;
 
 abstract class Migration {
+	/** @var string */
 	private $id;
+	/** @var Connection */
 	private $db;
 
 	/**
@@ -11,13 +13,13 @@ abstract class Migration {
 	 * @param $id
 	 * @param $db
 	 */
-	public function __construct($id, $db) {
+	public function __construct($id, Connection $db) {
 		$this->id = $id;
 		$this->db = $db;
 	}
 
 	public function apply($force = false) {
-		if(!$force && $this->db->migrations->row($this->id)) {
+		if(!$force && $this->db->migrations->row($this->id)->num_rows()) {
 			echo get_class($this) . " is already applied.\n";
 		} else {
 			echo "Installing " . get_class($this) . "...\n";
@@ -28,7 +30,7 @@ abstract class Migration {
 	}
 
 	public function revert($force = false) {
-		if(!$force && !$this->db->migrations->row($this->id)) {
+		if(!$force && !$this->db->migrations->row($this->id)->num_rows()) {
 			echo get_class($this) . " is not installed.\n";
 		} else {
 			echo "Removing " . get_class($this) . "...\n";
