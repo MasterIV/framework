@@ -26,9 +26,9 @@ class Dispatcher {
 
 		// Sort filters to ensure correct order of execution
 		usort($this->filters, function(Filter $a, Filter $b) {
-			if($a->requires()[get_class($b)])
+			if(isset($a->requires()[get_class($b)]))
 				return 1;
-			if($b->requires()[get_class($a)])
+			if(isset($b->requires()[get_class($a)]))
 				return -1;
 			return count($a->requires()) - count($b->requires());
 		});

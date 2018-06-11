@@ -92,7 +92,7 @@ class SessionAuthFilter extends AuthenticationFilter implements Filter  {
 
 	public function requires() {
 		return [
-				'Iv\Framework\Session\Session'
+				'Iv\Framework\Session\Session' => 1
 		];
 	}
 }
