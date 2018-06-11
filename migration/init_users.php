@@ -5,7 +5,7 @@ use Iv\Framework\Database\Connection;
 
 class InitUsersMigration extends Migration {
 	protected function install(Connection $db) {
-		$db->query("CREATE TABLE IF NOT EXISTS `user_data` (
+		$db->exec("CREATE TABLE IF NOT EXISTS `user_data` (
 			`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 			`type` tinyint(4) NOT NULL,
 			`name` varchar(32) NOT NULL,
@@ -24,7 +24,7 @@ class InitUsersMigration extends Migration {
 			UNIQUE (`name`)
 		) ENGINE=InnoDB  DEFAULT CHARSET=utf8;");
 
-		$db->query("CREATE TABLE IF NOT EXISTS `user_blocked` (
+		$db->exec("CREATE TABLE IF NOT EXISTS `user_blocked` (
 			`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 			`type` enum('name','email') NOT NULL,
 			`pattern` varchar(250) NOT NULL,
@@ -32,7 +32,7 @@ class InitUsersMigration extends Migration {
 			KEY `type` (`type`)
 		) ENGINE=InnoDB DEFAULT CHARSET=utf8 ;");
 
-		$db->query("CREATE TABLE IF NOT EXISTS `user_groups` (
+		$db->exec("CREATE TABLE IF NOT EXISTS `user_groups` (
 			`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 			`name` varchar(200) NOT NULL,
 			`rights` text DEFAULT NULL,
@@ -40,7 +40,7 @@ class InitUsersMigration extends Migration {
 		) ENGINE=InnoDB  DEFAULT CHARSET=utf8;");
 
 
-		$db->query("CREATE TABLE IF NOT EXISTS `user_group_rights` (
+		$db->exec("CREATE TABLE IF NOT EXISTS `user_group_rights` (
 			`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 			`name` varchar(200) NOT NULL,
 			`group` int(10) unsigned NOT NULL,
@@ -48,7 +48,7 @@ class InitUsersMigration extends Migration {
 		) ENGINE=InnoDB  DEFAULT CHARSET=utf8;");
 
 
-		$db->query("CREATE TABLE IF NOT EXISTS `user_group_owner` (
+		$db->exec("CREATE TABLE IF NOT EXISTS `user_group_owner` (
 			`group` int(10) unsigned NOT NULL,
 			`user` int(10) unsigned NOT NULL,
 			`start_date` int(10) unsigned NOT NULL DEFAULT 0,
@@ -57,19 +57,19 @@ class InitUsersMigration extends Migration {
 			KEY `group` (`group`)
 		) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
 
-		$db->query("ALTER TABLE `user_group_rights`
+		$db->exec("ALTER TABLE `user_group_rights`
 			ADD FOREIGN KEY (`group`) REFERENCES `user_groups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;");
 
-		$db->query("ALTER TABLE `user_group_owner`
+		$db->exec("ALTER TABLE `user_group_owner`
 			ADD FOREIGN KEY (`user`) REFERENCES `user_data` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 			ADD FOREIGN KEY (`group`) REFERENCES `user_groups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;");
 	}
 
 	protected function remove(Connection $db) {
-		$db->query("DROP TABLE `user_group_rights`;");
-		$db->query("DROP TABLE `user_group_owner`;");
-		$db->query("DROP TABLE `user_groups`;");
-		$db->query("DROP TABLE `user_blocked`;");
-		$db->query("DROP TABLE `user_data`;");
+		$db->exec("DROP TABLE `user_group_rights`;");
+		$db->exec("DROP TABLE `user_group_owner`;");
+		$db->exec("DROP TABLE `user_groups`;");
+		$db->exec("DROP TABLE `user_blocked`;");
+		$db->exec("DROP TABLE `user_data`;");
 	}
 }
