@@ -32,7 +32,7 @@ abstract class AuthenticationFilter {
 	}
 
 	protected function checkAccess($route, $user) {
-		$access = $this->default;
+		$access = $this->default || !empty($user);
 
 		$controller = isset( $this->configuration[$route['controller']] )
 				? $this->configuration[$route['controller']]
