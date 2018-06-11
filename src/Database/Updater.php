@@ -39,7 +39,7 @@ class Updater {
 	public function system($name) {
 		require Files::ROOT . "migration/$name.php";
 		$class = Strings::camelize($name) . 'Migration';
-		return new $class;
+		return new $class("migration/$name.php", $this->db);
 	}
 
 	/** @return Migration[] */
