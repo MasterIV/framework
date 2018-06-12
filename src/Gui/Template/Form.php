@@ -20,6 +20,8 @@ class Form {
 	public $buttons = [];
 	/** @var Link[] */
 	public $links = [];
+	/** @var bool */
+	public $upload = false;
 
 	/**
 	 * Form constructor.
@@ -58,6 +60,11 @@ class Form {
 		return $this->fields[] = new Field($name, $label, 'checkbox');
 	}
 
+	public function upload($name, $label) {
+		$this->upload = true;
+		return $this->fields[] = new Field($name, $label, 'file');
+	}
+
 	public function select($name, $label, $options) {
 		$select = $this->fields[] = new Field($name, $label, 'select');
 		$select->options = $options;
@@ -78,7 +85,7 @@ class Form {
 	}
 
 	public function validate($data) {
-		if(empty($data))
+		if (empty($data))
 			return false;
 
 		$valid = true;

@@ -1,4 +1,4 @@
-<form action="{{ action }}" method="{{ method }}">
+<form action="{{ action }}" method="{{ method }}"{% if upload %} enctype="multipart/form-data"{% endif %}>
 	{{ csrf_token }}
 
 	{% for  field in fields %}
@@ -27,6 +27,13 @@
 						<option value="{{ key }}" {% if key == field.value %}selected{% endif %}>{{ value }}</option>
 					{% endfor %}
 				</select>
+				{% if field.error %}<div class="invalid-feedback">{{ field.error }}</div>{% endif %}
+			</div>
+		{% elseif field.type == 'file' %}
+			<div class="form-group">
+				<label for="field_{{ id  }}_{{  field.name }}">{{ field.label }}:</label>
+				<input type="file" class="form-control-file{% if field.error %}  is-invalid{% endif %}"
+				       id="field_{{ id  }}_{{  field.name }}" name="{{ field.name }}">
 				{% if field.error %}<div class="invalid-feedback">{{ field.error }}</div>{% endif %}
 			</div>
 		{% else %}
