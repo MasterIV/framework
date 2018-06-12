@@ -16,7 +16,7 @@ class WhiteListValidator implements FormValidator {
 	}
 
 	public function validate($value) {
-		return !preg_match("/[{$this->pattern}]+/is", $value);
+		return preg_match("/^[{$this->pattern}]+\$/is", $value);
 	}
 
 	public function message() {

@@ -49,6 +49,7 @@ class Field {
 
 	public function validators($validators) {
 		$this->validators = ValidatorFactory::create($validators);
+		return $this;
 	}
 
 	public function fill($data) {

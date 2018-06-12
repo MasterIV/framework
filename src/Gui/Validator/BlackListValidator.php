@@ -15,9 +15,8 @@ class BlackListValidator implements FormValidator {
 		$this->pattern = $pattern;
 	}
 
-
 	public function validate($value) {
-		return preg_match("/[{$this->pattern}]+/is", $value);
+		return !preg_match("/[{$this->pattern}]+/is", $value);
 	}
 
 	public function message() {
