@@ -70,11 +70,11 @@ class Form {
 	}
 
 	public function button($label) {
-		$this->buttons[] = new Button($label);
+		return $this->buttons[] = new Button($label);
 	}
 
 	public function link($label, $url) {
-		$this->links[] = new Link($label, $url);
+		return $this->links[] = new Link($label, $url);
 	}
 
 	public function validate($data) {

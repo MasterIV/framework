@@ -4,25 +4,25 @@
 	{% for  field in fields %}
 		{% if field.type == 'textarea' %}
 			<div class="form-group">
-				<label for="field_{{ id + '_' + field.name }}">{{ field.label }}:</label>
+				<label for="field_{{ id  }}_{{  field.name }}">{{ field.label }}:</label>
 				<textarea class="form-control{% if field.error %}  is-invalid{% endif %}"
-				       id="field_{{ id + '_' + field.name }}" name="{{ field.name }}"
+				       id="field_{{ id  }}_{{  field.name }}" name="{{ field.name }}"
 				       placeholder="{{ field.placeholder }}">{{ field.value }}</textarea>
 				{% if field.error %}<div class="invalid-feedback">{{ field.error }}</div>{% endif %}
 			</div>
 		{% elseif field.type == 'checkbox' %}
 			<div class="form-group form-check">
 				<input type="checkbox" class="form-check-input{% if field.error %}  is-invalid{% endif %}"
-				       id="field_{{ id + '_' + field.name }}" name="{{ field.name }}"
+				       id="field_{{ id  }}_{{  field.name }}" name="{{ field.name }}"
 				       {% if field.value %}checked{% endif %}>
-				<label class="form-check-label" for="field_{{ id + '_' + field.name }}">{{ field.label }}</label>
+				<label class="form-check-label" for="field_{{ id  }}_{{  field.name }}">{{ field.label }}</label>
 				{% if field.error %}<div class="invalid-feedback">{{ field.error }}</div>{% endif %}
 			</div>
 		{% elseif field.type == 'select' %}
 			<div class="form-group">
-				<label for="field_{{ id + '_' + field.name }}">{{ field.label }}:</label>
+				<label for="field_{{ id  }}_{{  field.name }}">{{ field.label }}:</label>
 				<select class="form-control{% if field.error %}  is-invalid{% endif %}"
-				        id="field_{{ id + '_' + field.name }}" name="{{ field.name }}">
+				        id="field_{{ id  }}_{{  field.name }}" name="{{ field.name }}">
 					{% for key, value in field.options %}
 						<option value="{{ key }}" {% if key == field.value %}selected{% endif %}>{{ value }}</option>
 					{% endfor %}
@@ -31,9 +31,9 @@
 			</div>
 		{% else %}
 			<div class="form-group">
-				<label for="field_{{ id + '_' + field.name }}">{{ field.label }}:</label>
+				<label for="field_{{ id  }}_{{  field.name }}">{{ field.label }}:</label>
 				<input type="{{ field.type }}" class="form-control{% if field.error %}  is-invalid{% endif %}"
-				       id="field_{{ id + '_' + field.name }}" name="{{ field.name }}"
+				       id="field_{{ id  }}_{{  field.name }}" name="{{ field.name }}"
 				       placeholder="{{ field.placeholder }}" value="{{ field.value }}">
 				{% if field.error %}<div class="invalid-feedback">{{ field.error }}</div>{% endif %}
 			</div>
