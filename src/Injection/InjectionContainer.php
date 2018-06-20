@@ -38,6 +38,6 @@ class InjectionContainer extends Container  {
 	}
 
 	public function has($name) {
-		return isset($this->services[$name]) || isset($this->methods[$name]);
+		return !empty($this->services[$name]) || !empty($this->methods[$name]);
 	}
 }
